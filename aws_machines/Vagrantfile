@@ -1,0 +1,24 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+
+  config.vm.box = "dummy"
+  config.vm.synced_folder ".", "/vagrant", disabled: true
+
+  config.vm.provider :aws do |aws,override|
+
+    
+    aws.keypair_name = "key_per"
+    aws.ami = "ami-03746875d916becc0"
+    aws.instance_type = "t2.micro"
+    aws.region = "eu-west-1"
+    aws.subnet_id = "subnet-1de1a57b"
+    aws.security_groups = ["sg-0c51f509fa20022bf"]
+    aws.associate_public_ip = true
+
+    override.ssh.username = "ubuntu"
+  	override.ssh.private_key_path = "~/.ssh/key_per.pem"
+
+  end
+end
